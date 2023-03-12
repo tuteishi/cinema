@@ -4,14 +4,13 @@ import model.Person;
 import util.ConnectionManager;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
 public class PersonRepositoryImpl implements PersonRepository{
     @Override
-    public boolean create(Person person){
+    public boolean addPersonToDb(Person person){
         try (Connection connection = ConnectionManager.open()){
             PreparedStatement statement =
                     connection.prepareCall("INSERT INTO person (username,password) VALUES(?,?)");
@@ -22,8 +21,6 @@ public class PersonRepositoryImpl implements PersonRepository{
         } catch (SQLException e) {
             return  false;
         }
-
-
     }
 
     @Override

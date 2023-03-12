@@ -8,10 +8,14 @@ import java.util.Scanner;
 
 public class PersonServiceImpl implements PersonService {
 
-    private final PersonRepository personRepository = new PersonRepositoryImpl();
+    private static final PersonRepository personRepository = new PersonRepositoryImpl();
+
+    static {
+        createManager();
+    }
 
     @Override
-    public boolean create() {
+    public boolean createPerson() {
         Scanner scanner = new Scanner(System.in);
         Person person = new Person();
         System.out.print("Введите логин");
@@ -21,9 +25,18 @@ public class PersonServiceImpl implements PersonService {
         String password = scanner.nextLine();
         person.setPassword(password);
         try {
-            return personRepository.create(person);
+            return personRepository.addPersonToDb(person);
         } catch (ClassNotFoundException e) {
             return false;
+        }
+    }
+
+    private static void createManager(){
+        Person manager = new Person("manager", "1111");
+        try {
+            personRepository.addPersonToDb(manager);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 }

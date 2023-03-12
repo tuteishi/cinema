@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 public class PersonController {
     PersonService personService = new PersonServiceImpl();
-    public void startMenu(){
+    public void startMenu() throws ClassNotFoundException {
         System.out.println("""
                 1 - зарегистрироваться 
                 2 - войти 
@@ -17,8 +17,10 @@ public class PersonController {
         Scanner scanner = new Scanner(System.in);
         String step = scanner.nextLine();
         switch (step){
-            case "1" -> System.out.println("Меню регистрации");
-            personService.create();
+            case "1" -> {
+                System.out.println("Меню регистрации");
+                personService.createPerson();
+            }
             case "2" -> System.out.println("Меню входа");
             case "0" -> System.out.println("Меню выхода");
             default -> System.out.println("Некорректные данные");
