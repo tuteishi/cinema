@@ -1,5 +1,7 @@
 package controller;
 
+import repository.PersonRepository;
+import repository.PersonRepositoryImpl;
 import service.PersonService;
 import service.PersonServiceImpl;
 
@@ -7,23 +9,57 @@ import java.util.Scanner;
 
 public class PersonController {
     PersonService personService = new PersonServiceImpl();
-    public void startMenu() throws ClassNotFoundException {
+    PersonRepository personRepository = new PersonRepositoryImpl();
+
+    public void enterInSystem(){
         System.out.println("""
-                1 - зарегистрироваться 
-                2 - войти 
-                0 - выйти
-                
+                Enter:
+                1 - Register in the application.
+                2 - Log into the app.
                 """);
         Scanner scanner = new Scanner(System.in);
-        String step = scanner.nextLine();
-        switch (step){
-            case "1" -> {
-                System.out.println("Меню регистрации");
-                personService.createPerson();
-            }
-            case "2" -> System.out.println("Меню входа");
-            case "0" -> System.out.println("Меню выхода");
-            default -> System.out.println("Некорректные данные");
+        String choice = scanner.next();
+        switch (choice){
+            case "1" -> personService.createPerson();
+            case "2" -> roleMenu(personService.authorizationPerson());
+            default -> System.out.println("Invalid data entered, please try again.");
         }
     }
+
+//    public void case2(){
+//        String a = personService.authorizationPerson();
+//        roleMenu(personService.authorizationPerson());
+//    }
+
+    public void roleMenu(String role) {
+        switch (role){
+            case "USER" -> userMenu();
+            case "MANAGER" -> managerMenu();
+            case "ADMIN" -> adminMenu();
+
+        }
+
+    }
+
+    public void userMenu() {
+        System.out.println("""
+                Enter:
+                1 - Show movie poster.
+                2 - Buy or return a ticket.
+                3 - View purchased tickets.
+                """);
+        Scanner scanner = new Scanner(System.in);
+        String choice = scanner.next();
+
+    }
+    public void managerMenu() {
+
+    }
+
+    public void adminMenu() {
+
+    }
+
+
+
 }

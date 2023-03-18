@@ -1,15 +1,17 @@
 package model;
 
 public class Person {
-    private Integer Id;
+    private int Id;
     private String username;
     private String password;
+    private String role;
 
-    public Integer getId() {
+
+    public int getId() {
         return Id;
     }
 
-    public void setId(Integer id) {
+    public void setId(int id) {
         Id = id;
     }
 
@@ -29,11 +31,22 @@ public class Person {
         this.password = password;
     }
 
-    public Person(String username, String password) {
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public Person(int id, String username, String password, String role) {
+        Id = id;
         this.username = username;
         this.password = password;
+        this.role = role;
     }
 
     public Person() {
     }
+    
 }

@@ -4,39 +4,70 @@ import model.Person;
 import repository.PersonRepository;
 import repository.PersonRepositoryImpl;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class PersonServiceImpl implements PersonService {
+    Person person = new Person();
 
     private static final PersonRepository personRepository = new PersonRepositoryImpl();
-
-    static {
-        createManager();
-    }
 
     @Override
     public boolean createPerson() {
         Scanner scanner = new Scanner(System.in);
-        Person person = new Person();
-        System.out.print("Введите логин");
+        System.out.print("Enter username: ");
         String username = scanner.nextLine();
+        if (personRepository.getPersonByUsernameFromDb(username) != null) {
+            System.out.println("This username is already taken, enter a different username.");
+            createPerson();
+        }
         person.setUsername(username);
-        System.out.print("Введите пароль");
+        System.out.print("Enter password: ");
         String password = scanner.nextLine();
         person.setPassword(password);
-        try {
-            return personRepository.addPersonToDb(person);
-        } catch (ClassNotFoundException e) {
-            return false;
-        }
+        return personRepository.addPersonToDb(person);
     }
 
-    private static void createManager(){
-        Person manager = new Person("manager", "1111");
-        try {
-            personRepository.addPersonToDb(manager);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+    @Override
+    public String authorizationPerson() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter username: ");
+        String username = scanner.nextLine();
+        person.setUsername(username);
+        System.out.print("Enter password: ");
+        String password = scanner.nextLine();
+        person.setPassword(password);
+        if (personRepository.getPersonByUsernameFromDb(person.getUsername()) != null ){
+            String passwordDb = personRepository.getPersonByUsernameFromDb(person.getUsername()).getPassword();
+            if(passwordDb.equals(password)){
+                return personRepository.getPersonByUsernameFromDb(username).getRole();
+            }
+        }else {
+            System.out.println("This user does not exist, please check your username or password.");
         }
+        return null;
     }
+
+
+    @Override
+    public Person getByUsername(String username) {
+        return null;
+    }
+
+    @Override
+    public List<Person> getAllPersons() {
+        return null;
+    }
+
+    @Override
+    public boolean updatePersonById(Long id, Person person) {
+        return false;
+    }
+
+    @Override
+    public boolean deleteById(int id) {
+        return false;
+    }
+
+
 }
