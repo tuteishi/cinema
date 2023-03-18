@@ -1,7 +1,10 @@
 package controller;
 
+import model.Person;
 import repository.PersonRepository;
 import repository.PersonRepositoryImpl;
+import service.FilmService;
+import service.FilmServiceImpl;
 import service.PersonService;
 import service.PersonServiceImpl;
 
@@ -9,7 +12,7 @@ import java.util.Scanner;
 
 public class PersonController {
     PersonService personService = new PersonServiceImpl();
-    PersonRepository personRepository = new PersonRepositoryImpl();
+    FilmService filmService = new FilmServiceImpl();
 
     public void enterInSystem(){
         System.out.println("""
@@ -26,14 +29,10 @@ public class PersonController {
         }
     }
 
-//    public void case2(){
-//        String a = personService.authorizationPerson();
-//        roleMenu(personService.authorizationPerson());
-//    }
 
-    public void roleMenu(String role) {
-        switch (role){
-            case "USER" -> userMenu();
+    public void roleMenu(Person person) {
+        switch (person.getRole()){
+            case "USER" -> userMenu(person);
             case "MANAGER" -> managerMenu();
             case "ADMIN" -> adminMenu();
 
@@ -41,7 +40,7 @@ public class PersonController {
 
     }
 
-    public void userMenu() {
+    public void userMenu(Person person) {
         System.out.println("""
                 Enter:
                 1 - Show movie poster.
@@ -50,6 +49,11 @@ public class PersonController {
                 """);
         Scanner scanner = new Scanner(System.in);
         String choice = scanner.next();
+        switch (choice){
+            case "1" -> filmService.showFilms();
+            case "2" ->
+            case "3" ->
+        }
 
     }
     public void managerMenu() {

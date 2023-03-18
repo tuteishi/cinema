@@ -29,7 +29,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    public String authorizationPerson() {
+    public Person authorizationPerson() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Enter username: ");
         String username = scanner.nextLine();
@@ -40,7 +40,7 @@ public class PersonServiceImpl implements PersonService {
         if (personRepository.getPersonByUsernameFromDb(person.getUsername()) != null ){
             String passwordDb = personRepository.getPersonByUsernameFromDb(person.getUsername()).getPassword();
             if(passwordDb.equals(password)){
-                return personRepository.getPersonByUsernameFromDb(username).getRole();
+                return person;
             }
         }else {
             System.out.println("This user does not exist, please check your username or password.");

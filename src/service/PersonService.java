@@ -16,7 +16,7 @@ public interface PersonService {
     /**
      * Авторизация пользователя
      * */
-    String authorizationPerson();
+    Person authorizationPerson();
 
     /**
      * Получение пользователя по логину
