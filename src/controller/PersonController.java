@@ -3,16 +3,14 @@ package controller;
 import model.Person;
 import repository.PersonRepository;
 import repository.PersonRepositoryImpl;
-import service.FilmService;
-import service.FilmServiceImpl;
-import service.PersonService;
-import service.PersonServiceImpl;
+import service.*;
 
 import java.util.Scanner;
 
 public class PersonController {
     PersonService personService = new PersonServiceImpl();
     FilmService filmService = new FilmServiceImpl();
+    TicketService ticketService = new TicketServiceImpl();
 
     public void enterInSystem(){
         System.out.println("""
@@ -35,7 +33,6 @@ public class PersonController {
             case "USER" -> userMenu(person);
             case "MANAGER" -> managerMenu();
             case "ADMIN" -> adminMenu();
-
         }
 
     }
@@ -51,10 +48,23 @@ public class PersonController {
         String choice = scanner.next();
         switch (choice){
             case "1" -> filmService.showFilms();
-            case "2" ->
-            case "3" ->
+            case "2" -> buyReturnTicket(person);
+//            case "3" ->
         }
+    }
 
+    public void buyReturnTicket(Person person){
+        System.out.println("""
+                Enter:
+                1 - Buy ticket.
+                2 - Return ticket.
+                """);
+        Scanner scanner = new Scanner(System.in);
+        String choice = scanner.next();
+        switch (choice){
+            case "1" -> ticketService.buyTicket(person);
+//            case "2" ->
+        }
     }
     public void managerMenu() {
 

@@ -48,5 +48,14 @@ public class Person {
 
     public Person() {
     }
-    
+
+    @Override
+    public String toString() {
+        return "Person{" +
+               "Id=" + Id +
+               ", username='" + username + '\'' +
+               ", password='" + password + '\'' +
+               ", role='" + role + '\'' +
+               '}';
+    }
 }

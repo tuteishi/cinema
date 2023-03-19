@@ -16,10 +16,11 @@ public class Main {
         PersonController personController = new PersonController();
 
 //        personService.createPerson();
-//        personService.authorizationPerson();
+//        System.out.println(personService.authorizationPerson());
 
-//        personController.enterInSystem();
-        filmService.addFilmToDb();
+
+        personController.enterInSystem();
+//        filmService.addFilmToDb();
 //        filmService.showFilms();
 //        System.out.println(filmService.deleteFilm());
 //       personController.enterInSystem();

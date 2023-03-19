@@ -40,7 +40,7 @@ public class PersonServiceImpl implements PersonService {
         if (personRepository.getPersonByUsernameFromDb(person.getUsername()) != null ){
             String passwordDb = personRepository.getPersonByUsernameFromDb(person.getUsername()).getPassword();
             if(passwordDb.equals(password)){
-                return person;
+                return personRepository.getPersonByUsernameFromDb(person.getUsername());
             }
         }else {
             System.out.println("This user does not exist, please check your username or password.");
