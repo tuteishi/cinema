@@ -3,10 +3,7 @@ package com.sanets.main;
 import controller.PersonController;
 import repository.FilmRepository;
 import repository.FilmRepositoryImpl;
-import service.FilmService;
-import service.FilmServiceImpl;
-import service.PersonService;
-import service.PersonServiceImpl;
+import service.*;
 
 public class Main {
     public static void main(String[] args) throws ClassNotFoundException {
@@ -14,16 +11,19 @@ public class Main {
         FilmRepository filmRepository = new FilmRepositoryImpl();
         PersonService personService = new PersonServiceImpl();
         PersonController personController = new PersonController();
+        TicketService ticketService = new TicketServiceImpl();
 
 //        personService.createPerson();
 //        System.out.println(personService.authorizationPerson());
 
 
-        personController.enterInSystem();
-//        filmService.addFilmToDb();
+//        personController.enterInSystem();
+//        filmService.addFilmWithTickets();
+//        System.out.println(filmService.addFilm());
 //        filmService.showFilms();
 //        System.out.println(filmService.deleteFilm());
 //       personController.enterInSystem();
+        System.out.println(ticketService.searchFreeSeatInTicket());
 
 
 //        filmService.addFilmToDb();

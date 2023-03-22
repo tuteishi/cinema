@@ -13,11 +13,11 @@ public class PersonController {
     TicketService ticketService = new TicketServiceImpl();
 
     public void enterInSystem(){
-        System.out.println("""
+        System.out.print("""
                 Enter:
                 1 - Register in the application.
-                2 - Log into the app.
-                """);
+                2 - Log into the app. 
+                """ + System.lineSeparator());
         Scanner scanner = new Scanner(System.in);
         String choice = scanner.next();
         switch (choice){
@@ -49,7 +49,6 @@ public class PersonController {
         switch (choice){
             case "1" -> filmService.showFilms();
             case "2" -> buyReturnTicket(person);
-//            case "3" ->
         }
     }
 
@@ -63,7 +62,7 @@ public class PersonController {
         String choice = scanner.next();
         switch (choice){
             case "1" -> ticketService.buyTicket(person);
-//            case "2" ->
+            case "2" -> ticketService.returnTicket(person);
         }
     }
     public void managerMenu() {
