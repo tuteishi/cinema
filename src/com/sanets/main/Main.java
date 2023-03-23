@@ -23,10 +23,10 @@ public class Main {
 //        filmService.showFilms();
 //        System.out.println(filmService.deleteFilm());
 //       personController.enterInSystem();
-        System.out.println(ticketService.searchFreeSeatInTicket());
+//        ticketService.searchFreeSeatInTicket(20);
 
 
-//        filmService.addFilmToDb();
+
 
     }
 }
