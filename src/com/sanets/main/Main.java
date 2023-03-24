@@ -13,11 +13,12 @@ public class Main {
         PersonController personController = new PersonController();
         TicketService ticketService = new TicketServiceImpl();
 
-//        personService.createPerson();
+        personService.createPerson();
 //        System.out.println(personService.authorizationPerson());
 
 
 //        personController.enterInSystem();
+//        filmService.deleteFilm();
 //        filmService.addFilmWithTickets();
 //        System.out.println(filmService.addFilm());
 //        filmService.showFilms();

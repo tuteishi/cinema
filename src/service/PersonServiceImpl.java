@@ -14,17 +14,20 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public boolean createPerson() {
+        String username;
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter username: ");
-        String username = scanner.nextLine();
-        if (personRepository.getPersonByUsernameFromDb(username) != null) {
-            System.out.println("This username is already taken, enter a different username.");
-            createPerson();
+        while (true) {
+            System.out.print("Enter username: ");
+            username = scanner.next();
+            if (personRepository.getPersonByUsernameFromDb(username) != null) {
+                System.out.println("This username is already taken, enter a different username.");
+            }else break;
         }
         person.setUsername(username);
         System.out.print("Enter password: ");
-        String password = scanner.nextLine();
+        String password = scanner.next();
         person.setPassword(password);
+        System.out.println("User " + username + " registered.");
         return personRepository.addPersonToDb(person);
     }
 
