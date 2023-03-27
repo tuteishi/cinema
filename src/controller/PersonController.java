@@ -33,9 +33,9 @@ public class PersonController {
 
     public void roleMenu(Person person) {
         switch (person.getRole()){
-            case "USER" -> userMenu(person);
-            case "MANAGER" -> managerMenu();
-            case "ADMIN" -> adminMenu();
+            case USER -> userMenu(person);
+            case MANAGER-> managerMenu();
+            case ADMIN -> adminMenu();
         }
 
     }

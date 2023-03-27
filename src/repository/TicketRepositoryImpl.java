@@ -31,6 +31,36 @@ public class TicketRepositoryImpl implements TicketRepository{
         }
     }
 
+    @Override
+    public boolean deleteTicketsOfFilm(Integer id) {
+        try (Connection connection = ConnectionManager.open()) {
+            PreparedStatement statement =
+                    connection.prepareStatement("DELETE FROM ticket WHERE film_id=?");
+            statement.setInt(1,id);
+            statement.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean editFilmNameInTickets(Film film) {
+        try (Connection connection = ConnectionManager.open()) {
+            PreparedStatement statement =
+                    connection.prepareStatement("UPDATE ticket SET film_name=? WHERE film_id=?");
+            statement.setString(1, film.getFilmName());
+
+            statement.setInt(2, film.getFilmId());
+
+            statement.execute();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 
     @Override
     public boolean addPersonTicketDb(Person person, Ticket ticket) {

@@ -3,6 +3,8 @@ package com.sanets.main;
 import controller.PersonController;
 import repository.FilmRepository;
 import repository.FilmRepositoryImpl;
+import repository.PersonRepository;
+import repository.PersonRepositoryImpl;
 import service.*;
 
 public class Main {
@@ -10,14 +12,17 @@ public class Main {
         FilmService filmService = new FilmServiceImpl();
         FilmRepository filmRepository = new FilmRepositoryImpl();
         PersonService personService = new PersonServiceImpl();
+        PersonRepository personRepository = new PersonRepositoryImpl();
         PersonController personController = new PersonController();
         TicketService ticketService = new TicketServiceImpl();
 
-        personService.createPerson();
+//        personService.createPerson();
 //        System.out.println(personService.authorizationPerson());
 
 
 //        personController.enterInSystem();
+
+
 //        filmService.deleteFilm();
 //        filmService.addFilmWithTickets();
 //        System.out.println(filmService.addFilm());
@@ -25,6 +30,9 @@ public class Main {
 //        System.out.println(filmService.deleteFilm());
 //       personController.enterInSystem();
 //        ticketService.searchFreeSeatInTicket(20);
+//        filmService.editFilm();
+        personRepository.getAllPersonsFromDb();
+
 
 
 

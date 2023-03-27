@@ -14,19 +14,18 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class TicketServiceImpl implements TicketService{
+public class TicketServiceImpl implements TicketService {
     TicketRepository ticketRepository = new TicketRepositoryImpl();
     FilmService filmService = new FilmServiceImpl();
     FilmRepository filmRepository = new FilmRepositoryImpl();
     Ticket ticket = new Ticket();
 
 
-
     @Override
     public boolean addTicketsDB(Film film) {
         int count = 1;
         film.setFilmId(filmRepository.getFilmIdFromDb(film));
-        while (count <= 10){
+        while (count <= 10) {
             ticketRepository.addTicketsDb(film, count);
             count++;
         }
@@ -35,7 +34,7 @@ public class TicketServiceImpl implements TicketService{
 
     @Override
     public boolean buyTicket(Person person) {
-            Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
         Integer filmId;
         while (true) {
             System.out.println("Enter the id of the desired film: ");
@@ -44,7 +43,7 @@ public class TicketServiceImpl implements TicketService{
             if (searchIdFilmInTicket(filmId)) {
                 ticket.setFilmId(filmId);
                 break;
-            }else {
+            } else {
                 System.out.println("There is no film with id: " + filmId);
             }
         }
@@ -56,12 +55,13 @@ public class TicketServiceImpl implements TicketService{
             if (searchNumberOfSeatInTicket(numberOfSeat)) {
                 ticket.setNumberOfSeat(numberOfSeat);
                 break;
-            }else {
+            } else {
                 System.out.println("There is no film with number seat: " + numberOfSeat);
             }
         }
         return ticketRepository.addPersonTicketDb(person, ticket);
     }
+
 
     @Override
     public boolean returnTicket(Person person) {
@@ -73,7 +73,7 @@ public class TicketServiceImpl implements TicketService{
             if (searchIdTicket(ticketId)) {
                 ticket.setTicketId(ticketId);
                 break;
-            }else {
+            } else {
                 System.out.println("There is no ticket with id: " + ticketId);
             }
         }
@@ -101,20 +101,20 @@ public class TicketServiceImpl implements TicketService{
 
     public boolean searchIdFilmInTicket(Integer filmId) {
         boolean match = ticketRepository.getAllTicketsDb().stream()
-                .anyMatch (f -> f.getFilmId().equals(filmId));
+                .anyMatch(f -> f.getFilmId().equals(filmId));
         return match;
 
     }
 
     public boolean searchNumberOfSeatInTicket(Integer numberOfSeat) {
         boolean match = ticketRepository.getAllTicketsDb().stream()
-                .anyMatch (f -> f.getNumberOfSeat().equals(numberOfSeat));
+                .anyMatch(f -> f.getNumberOfSeat().equals(numberOfSeat));
         return match;
     }
 
     public boolean searchIdTicket(Integer ticketId) {
         boolean match = ticketRepository.getAllTicketsDb().stream()
-                .anyMatch (f -> f.getTicketId().equals(ticketId));
+                .anyMatch(f -> f.getTicketId().equals(ticketId));
         return match;
 
     }

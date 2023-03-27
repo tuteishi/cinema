@@ -3,6 +3,8 @@ package service;
 import model.Film;
 import repository.FilmRepository;
 import repository.FilmRepositoryImpl;
+import repository.TicketRepository;
+import repository.TicketRepositoryImpl;
 import util.Validator;
 
 import java.sql.Date;
@@ -17,11 +19,13 @@ import java.util.stream.Stream;
 public class FilmServiceImpl implements FilmService {
     private static final FilmRepository filmRepository = new FilmRepositoryImpl();
     private static final TicketService ticketService = new TicketServiceImpl();
+    private static final TicketRepository ticketRepository = new TicketRepositoryImpl();
     Scanner scanner = new Scanner(System.in);
     Validator validator = new Validator();
     String date;
     String time;
     String idString;
+    String error = "Invalid data entered, please try again.";
 
     @Override
     public Film addFilm() {
@@ -70,11 +74,78 @@ public class FilmServiceImpl implements FilmService {
         while (!validator.numberValid(idString));
         Integer id = Integer.parseInt(idString);
         if (searchIdFilm(id)) {
+            ticketRepository.deleteTicketsOfFilm(id);
             return filmRepository.deleteFilmDb(id);
         } else {
             System.out.println("There is no film with id " + id);
             return false;
         }
+    }
+
+    @Override
+    public boolean editFilm() {
+        Film film = new Film();
+        do {
+            System.out.print("Enter Id film for edit: ");
+            idString = scanner.next();
+        }
+        while (!validator.numberValid(idString));
+        Integer id = Integer.parseInt(idString);
+        film.setFilmId(id);
+        if (searchIdFilm(id)) {
+            System.out.println("""
+                    Enter:
+                    1 - Edit film name.
+                    2 - Edit film date.
+                    3 - Edit fim time.
+                    """);
+            String choice = scanner.next();
+            switch (choice) {
+                case "1" -> editFilmName(film);
+                case "2" -> editFilmDate(film);
+                case "3" -> editFilmTime(film);
+                default -> System.out.println(error);
+            }
+            return true;
+        } else {
+            System.out.println("There is no film with id " + id);
+            return false;
+        }
+    }
+
+    private void editFilmName(Film film) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter new film name: ");
+        String filmName = scanner.nextLine();
+        film.setFilmName(filmName);
+        filmRepository.editFilmName(film);
+        ticketRepository.editFilmNameInTickets(film);
+    }
+
+    private void editFilmDate(Film film) {
+        Scanner scanner = new Scanner(System.in);
+        do {
+            System.out.print("Enter new date of film (dd-MM-yyyy): ");
+            date = scanner.nextLine();
+        }
+        while (!validator.dateValid(date));
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate localDate = LocalDate.parse(date, dateTimeFormatter);
+        film.setFilmDate(localDate);
+        filmRepository.editFilmDate(film);
+    }
+
+    private void editFilmTime(Film film) {
+        Scanner scanner = new Scanner(System.in);
+        do {
+            System.out.print("Enter new time film (HH-mm): ");
+            time = scanner.nextLine();
+        }
+        while (!validator.timeValid(time));
+        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH-mm");
+        LocalTime localTime = LocalTime.parse(time, timeFormatter);
+        film.setFilmTime(localTime);
+        filmRepository.editFilmTime(film);
     }
 
     @Override

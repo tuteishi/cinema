@@ -47,12 +47,65 @@ public class FilmRepositoryImpl implements FilmRepository {
     }
 
     @Override
+    public boolean editFilmName(Film film) {
+        try (Connection connection = ConnectionManager.open()) {
+            PreparedStatement statement =
+                    connection.prepareStatement("UPDATE film SET film_name=? WHERE id=?");
+            statement.setString(1, film.getFilmName());
+
+            statement.setInt(2, film.getFilmId());
+
+            statement.execute();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean editFilmDate(Film film) {
+        try (Connection connection = ConnectionManager.open()) {
+            PreparedStatement statement =
+                    connection.prepareStatement("UPDATE film SET film_date=? WHERE id=?");
+
+            statement.setDate(1, Date.valueOf(film.getFilmDate()));
+
+            statement.setInt(2, film.getFilmId());
+
+            statement.execute();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean editFilmTime(Film film) {
+        try (Connection connection = ConnectionManager.open()) {
+            PreparedStatement statement =
+                    connection.prepareStatement("UPDATE film SET film_time=? WHERE id=?");
+
+            statement.setTime(1, Time.valueOf(film.getFilmTime()));
+
+            statement.setInt(2, film.getFilmId());
+
+            statement.execute();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
     public Integer getFilmIdFromDb(Film film) {
         try (Connection connection = ConnectionManager.open()){
             PreparedStatement statement = connection.prepareStatement(
                     "SELECT id FROM film WHERE film_name=? AND film_date=? AND film_time=?");
             statement.setString(1, film.getFilmName());
-            statement.setDate(2,Date.valueOf(film.getFilmDate()));
+            statement.setDate(2, Date.valueOf(film.getFilmDate()));
             statement.setTime(3, Time.valueOf(film.getFilmTime()));
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {

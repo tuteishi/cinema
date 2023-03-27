@@ -1,9 +1,9 @@
 package model;
 
 public enum Role {
-    USER("User"),
-    MANAGER("Manager"),
-    ADMIN("Admin");
+    USER("USER"),
+    MANAGER("MANAGER"),
+    ADMIN("ADMIN");
 
     Role(String role) {
     }

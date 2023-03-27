@@ -38,10 +38,11 @@ public class PersonRepositoryImpl implements PersonRepository{
                 int id = resultSet.getInt("id");
                 String username = resultSet.getString("username");
                 String password = resultSet.getString("password");
-                String role = resultSet.getString("password");
+                Role role = Role.valueOf(resultSet.getString("role"));
                 Person person = new Person(id, username, password, role);
                 persons.add(person);
             }
+            System.out.println(persons);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -58,7 +59,7 @@ public class PersonRepositoryImpl implements PersonRepository{
             while (resultSet.next()){
                 int id = resultSet.getInt("id");
                 String password = resultSet.getString("password");
-                String role = resultSet.getString("role");
+                Role role = Role.valueOf(resultSet.getString("role"));
                 Person personBd = new Person(id, username, password, role);
                 return personBd;
             }
