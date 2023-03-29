@@ -42,7 +42,6 @@ public class PersonRepositoryImpl implements PersonRepository{
                 Person person = new Person(id, username, password, role);
                 persons.add(person);
             }
-            System.out.println(persons);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -74,6 +73,34 @@ public class PersonRepositoryImpl implements PersonRepository{
         try (Connection connection = ConnectionManager.open()){
             PreparedStatement statement = connection.prepareStatement("DELETE FROM person WHERE id=?");
             statement.setInt(1, id);
+            statement.execute();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public boolean editRoleManager(Integer id) {
+        try (Connection connection = ConnectionManager.open()){
+            PreparedStatement statement = connection.prepareStatement("UPDATE person SET role=? WHERE id=?");
+            statement.setString(1, Role.MANAGER.name());
+            statement.setInt(2, id);
+            statement.execute();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public boolean editRoleAdmin(Integer id) {
+        try (Connection connection = ConnectionManager.open()){
+            PreparedStatement statement = connection.prepareStatement("UPDATE person SET role=? WHERE id=?");
+            statement.setString(1, Role.ADMIN.name());
+            statement.setInt(2, id);
             statement.execute();
             return true;
         } catch (SQLException e) {

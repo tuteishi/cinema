@@ -26,15 +26,17 @@ public interface PersonService {
     /**
      * Получение всех пльзователей
      * */
-    List <Person> getAllPersons();
+    public void showAllPersons();
 
     /**
      * Обновление пользователя по Id
      * */
-    boolean updatePersonById (Long id, Person person);
+    boolean updatePersonById ();
 
     /**
      * Удаление пользователя из базы данных
      * */
-    boolean deleteById(int id);
+    boolean deleteById();
+
+    public boolean searchIdPerson(Integer id);
 }

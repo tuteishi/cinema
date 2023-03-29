@@ -11,7 +11,8 @@ public interface TicketService {
     boolean addTicketsDB(Film film);
     boolean buyTicket(Person person);
     boolean returnTicket(Person person);
-    void showTickets(Person person);
+    boolean returnTicketOfPerson();
+    void showPersonTickets(Person person);
     boolean searchIdFilmInTicket(Integer filmId);
     boolean searchNumberOfSeatInTicket(Integer numberOfSeat);
     public void searchFreeSeatInTicket(Integer filmId);

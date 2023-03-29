@@ -1,17 +1,17 @@
 package model;
 
 public class Person {
-    private int Id;
+    private Integer Id;
     private String username;
     private String password;
     private Role role;
 
 
-    public int getId() {
+    public Integer getId() {
         return Id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         Id = id;
     }
 
@@ -39,7 +39,7 @@ public class Person {
         this.role = role;
     }
 
-    public Person(int id, String username, String password, Role role) {
+    public Person(Integer id, String username, String password, Role role) {
         Id = id;
         this.username = username;
         this.password = password;
@@ -51,11 +51,9 @@ public class Person {
 
     @Override
     public String toString() {
-        return "Person{" +
+        return "Person " +
                "Id=" + Id +
-               ", username='" + username + '\'' +
-               ", password='" + password + '\'' +
-               ", role='" + role + '\'' +
-               '}';
+               ", username='" + username +
+               "', role='" + role + '\'';
     }
 }

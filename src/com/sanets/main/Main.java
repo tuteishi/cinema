@@ -31,9 +31,9 @@ public class Main {
 //       personController.enterInSystem();
 //        ticketService.searchFreeSeatInTicket(20);
 //        filmService.editFilm();
-        personRepository.getAllPersonsFromDb();
-
-
+//        personRepository.getAllPersonsFromDb();
+//            personService.deleteById();
+        ticketService.returnTicketOfPerson();
 
 
 

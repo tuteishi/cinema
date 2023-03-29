@@ -67,6 +67,7 @@ public class FilmServiceImpl implements FilmService {
 
     @Override
     public boolean deleteFilm() {
+        showFilms();
         do {
             System.out.print("Enter Id film for delete: ");
             idString = scanner.next();
@@ -84,6 +85,7 @@ public class FilmServiceImpl implements FilmService {
 
     @Override
     public boolean editFilm() {
+        showFilms();
         Film film = new Film();
         do {
             System.out.print("Enter Id film for edit: ");

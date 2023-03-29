@@ -9,4 +9,6 @@ public interface PersonRepository {
     public List <Person> getAllPersonsFromDb();
     public Person getPersonByUsernameFromDb(String username);
     public boolean deletePersonByIdFromDb(int id);
+    public boolean editRoleManager(Integer id);
+    public boolean editRoleAdmin(Integer id);
 }

@@ -7,17 +7,18 @@ import repository.FilmRepository;
 import repository.FilmRepositoryImpl;
 import repository.TicketRepository;
 import repository.TicketRepositoryImpl;
+import util.Validator;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class TicketServiceImpl implements TicketService {
     TicketRepository ticketRepository = new TicketRepositoryImpl();
     FilmService filmService = new FilmServiceImpl();
     FilmRepository filmRepository = new FilmRepositoryImpl();
+    PersonService personService = new PersonServiceImpl();
+    Validator validator = new Validator();
     Ticket ticket = new Ticket();
 
 
@@ -81,7 +82,30 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public void showTickets(Person person) {
+    public boolean returnTicketOfPerson() {
+        personService.showAllPersons();
+        String idString;
+        Scanner scanner = new Scanner(System.in);
+        do {
+            System.out.print("Enter user ID for show user tickets: ");
+            idString = scanner.next();
+        }
+        while (!validator.numberValid(idString));
+        Integer id = Integer.parseInt(idString);
+        Person person = new Person();
+        person.setId(id);
+        if (personService.searchIdPerson(id)) {
+            showPersonTickets(person);
+            returnTicket(person);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+    @Override
+    public void showPersonTickets(Person person) {
         List<Ticket> personTickets = ticketRepository.getAllTicketsDb().stream()
                 .filter(ticket1 -> ticket1.getPersonId().equals(person.getId()))
                 .collect(Collectors.toList());
