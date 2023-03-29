@@ -109,7 +109,11 @@ public class TicketServiceImpl implements TicketService {
         List<Ticket> personTickets = ticketRepository.getAllTicketsDb().stream()
                 .filter(ticket1 -> ticket1.getPersonId().equals(person.getId()))
                 .collect(Collectors.toList());
-        System.out.println(personTickets);
+        if (personTickets.isEmpty()) {
+            System.out.println("You haven't purchased tickets...");
+        }else {
+            System.out.println(personTickets);
+        }
     }
 
     @Override

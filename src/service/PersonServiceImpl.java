@@ -20,6 +20,7 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public boolean createPerson() {
         String username;
+        String password1;
         Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.print("Enter username: ");
@@ -29,9 +30,18 @@ public class PersonServiceImpl implements PersonService {
             } else break;
         }
         person.setUsername(username);
-        System.out.print("Enter password: ");
-        String password = scanner.next();
-        person.setPassword(password);
+        while (true) {
+            System.out.print("Enter password: ");
+            password1 = scanner.next();
+            System.out.print("Repeat the entered password: ");
+            String password2 = scanner.next();
+            if (password1.equals(password2)){
+                break;
+            }else {
+                System.out.println("The entered passwords are not equal...");
+            }
+        }
+        person.setPassword(password1);
         System.out.println("User " + username + " registered.");
         return personRepository.addPersonToDb(person);
     }
@@ -48,6 +58,7 @@ public class PersonServiceImpl implements PersonService {
         if (personRepository.getPersonByUsernameFromDb(person.getUsername()) != null) {
             String passwordDb = personRepository.getPersonByUsernameFromDb(person.getUsername()).getPassword();
             if (passwordDb.equals(password)) {
+                System.out.println("User " + username + " successfully authorized.");
                 return personRepository.getPersonByUsernameFromDb(person.getUsername());
             }
         } else {

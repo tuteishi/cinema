@@ -20,7 +20,7 @@ public class Main {
 //        System.out.println(personService.authorizationPerson());
 
 
-//        personController.enterInSystem();
+        personController.enterInSystem();
 
 
 //        filmService.deleteFilm();
@@ -33,7 +33,7 @@ public class Main {
 //        filmService.editFilm();
 //        personRepository.getAllPersonsFromDb();
 //            personService.deleteById();
-        ticketService.returnTicketOfPerson();
+//        ticketService.returnTicketOfPerson();
 
 
 
