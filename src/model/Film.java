@@ -63,10 +63,10 @@ public class Film {
 
     @Override
     public String toString() {
-        return  "Id: " + filmId + " | "+
-                " Film name: " + '\"' + filmName + '\"' +
-                " Data show: " + filmDate +
-                " Time show: " + filmTime;
+        return  "Id: " + filmId + " | " +
+                "Film name: " + '\"' + filmName + '\"' + " | " +
+                "Data show: " + filmDate + " | " +
+                "Time show: " + filmTime + " | ";
     }
 
 }

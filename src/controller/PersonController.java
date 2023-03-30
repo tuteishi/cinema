@@ -113,7 +113,7 @@ public class PersonController {
             System.out.println(System.lineSeparator() + """
                     Enter:
                     1 - Delete or edit a user.
-                    2 - Delete or edit a film.
+                    2 - Add, delete or edit film.
                     3 - Exit.
                     """);
             Scanner scanner = new Scanner(System.in);
@@ -150,16 +150,18 @@ public class PersonController {
         while (true) {
             System.out.println(System.lineSeparator() + """
                     Enter:
-                    1 - Delete film.
-                    2 - Edit film.
-                    3 - Back to menu.
+                    1 - Add film.
+                    2 - Delete film.
+                    3 - Edit film.
+                    4 - Back to menu.
                     """);
             Scanner scanner = new Scanner(System.in);
             String choice = scanner.next();
             switch (choice) {
-                case "1" -> filmService.deleteFilm();
-                case "2" -> filmService.editFilm();
-                case "3" -> adminMenu();
+                case "1" -> filmService.addFilmWithTickets();
+                case "2" -> filmService.deleteFilm();
+                case "3" -> filmService.editFilm();
+                case "4" -> adminMenu();
                 default -> System.out.println(error);
             }
         }

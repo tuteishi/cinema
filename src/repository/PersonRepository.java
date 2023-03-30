@@ -11,4 +11,5 @@ public interface PersonRepository {
     public boolean deletePersonByIdFromDb(int id);
     public boolean editRoleManager(Integer id);
     public boolean editRoleAdmin(Integer id);
+    public boolean editRoleUser(Integer id);
 }

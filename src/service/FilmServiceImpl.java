@@ -27,9 +27,7 @@ public class FilmServiceImpl implements FilmService {
     String idString;
     String error = "Invalid data entered, please try again.";
 
-    @Override
     public Film addFilm() {
-        Scanner scanner = new Scanner(System.in);
         System.out.print("Enter film name: ");
         String filmName = scanner.nextLine();
         Film film = new Film(filmName, addDate(), addTime());
@@ -76,9 +74,10 @@ public class FilmServiceImpl implements FilmService {
         Integer id = Integer.parseInt(idString);
         if (searchIdFilm(id)) {
             ticketRepository.deleteTicketsOfFilm(id);
+            System.out.println(System.lineSeparator() + "Film with Id " + id + " deleted.");
             return filmRepository.deleteFilmDb(id);
         } else {
-            System.out.println("There is no film with id " + id);
+            System.out.println(System.lineSeparator() + "There is no film with id " + id + ".");
             return false;
         }
     }
@@ -88,14 +87,14 @@ public class FilmServiceImpl implements FilmService {
         showFilms();
         Film film = new Film();
         do {
-            System.out.print("Enter Id film for edit: ");
+            System.out.print(System.lineSeparator() + "Enter Id film for edit: ");
             idString = scanner.next();
         }
         while (!validator.numberValid(idString));
         Integer id = Integer.parseInt(idString);
         film.setFilmId(id);
         if (searchIdFilm(id)) {
-            System.out.println("""
+            System.out.println(System.lineSeparator() + """
                     Enter:
                     1 - Edit film name.
                     2 - Edit film date.
@@ -110,14 +109,14 @@ public class FilmServiceImpl implements FilmService {
             }
             return true;
         } else {
-            System.out.println("There is no film with id " + id);
+            System.out.println(System.lineSeparator() + "There is no film with id " + id + ".");
             return false;
         }
     }
 
     private void editFilmName(Film film) {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter new film name: ");
+        System.out.print("Enter new film name: ");
         String filmName = scanner.nextLine();
         film.setFilmName(filmName);
         filmRepository.editFilmName(film);
@@ -159,9 +158,13 @@ public class FilmServiceImpl implements FilmService {
 
     @Override
     public void showFilms() {
-        Stream<Film> stream = filmRepository.getAllFilmsDb().stream();
-        stream
-                .sorted(Comparator.comparing(Film::getFilmDate))
-                .forEach(System.out::println);
+        if (filmRepository.getAllFilmsDb().isEmpty()) {
+            System.out.println("There are no movies available to watch yet.");
+        } else {
+            Stream<Film> stream = filmRepository.getAllFilmsDb().stream();
+            stream
+                    .sorted(Comparator.comparing(Film::getFilmDate))
+                    .forEach(System.out::println);
+        }
     }
 }

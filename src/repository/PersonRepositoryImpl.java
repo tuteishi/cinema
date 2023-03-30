@@ -109,5 +109,19 @@ public class PersonRepositoryImpl implements PersonRepository{
         return false;
     }
 
+    @Override
+    public boolean editRoleUser(Integer id) {
+        try (Connection connection = ConnectionManager.open()){
+            PreparedStatement statement = connection.prepareStatement("UPDATE person SET role=? WHERE id=?");
+            statement.setString(1, Role.USER.name());
+            statement.setInt(2, id);
+            statement.execute();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 
 }

@@ -51,9 +51,8 @@ public class Person {
 
     @Override
     public String toString() {
-        return "Person " +
-               "Id=" + Id +
-               ", username='" + username +
-               "', role='" + role + '\'';
+        return "Person Id = " + Id + " | " +
+               "Username = " + username + " | " +
+               "Role = " + role + " | ";
     }
 }

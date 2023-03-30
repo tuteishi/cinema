@@ -92,11 +92,11 @@ public class Ticket {
 
     @Override
     public String toString() {
-        return "Ticket Id = " + ticketId +
-               ", person Id = " + personId +
-               ", film Id = " + filmId +
-               ", filmName = '" + filmName + '\'' +
-               ", number of seat = " + numberOfSeat +
-               ", coast = " + coast;
+        return "Ticket Id = " + ticketId + " | " +
+               "Person Id = " + personId + " | " +
+               "Film Id = " + filmId + " | " +
+               "FilmName = " + '\"' + filmName + '\"' + " | " +
+               "Number of seat = " + numberOfSeat + " | " +
+               "Coast = " + coast + " | ";
     }
 }

@@ -12,7 +12,7 @@ public interface TicketService {
     boolean buyTicket(Person person);
     boolean returnTicket(Person person);
     boolean returnTicketOfPerson();
-    void showPersonTickets(Person person);
+    List<Ticket> showPersonTickets(Person person);
     boolean searchIdFilmInTicket(Integer filmId);
     boolean searchNumberOfSeatInTicket(Integer numberOfSeat);
     public void searchFreeSeatInTicket(Integer filmId);

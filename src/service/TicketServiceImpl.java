@@ -14,10 +14,10 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class TicketServiceImpl implements TicketService {
-    TicketRepository ticketRepository = new TicketRepositoryImpl();
-    FilmService filmService = new FilmServiceImpl();
-    FilmRepository filmRepository = new FilmRepositoryImpl();
-    PersonService personService = new PersonServiceImpl();
+    private static final TicketRepository ticketRepository = new TicketRepositoryImpl();
+    private static final FilmService filmService = new FilmServiceImpl();
+    private static final FilmRepository filmRepository = new FilmRepositoryImpl();
+    private static final PersonService personService = new PersonServiceImpl();
     Validator validator = new Validator();
     Ticket ticket = new Ticket();
 
@@ -45,7 +45,7 @@ public class TicketServiceImpl implements TicketService {
                 ticket.setFilmId(filmId);
                 break;
             } else {
-                System.out.println("There is no film with id: " + filmId);
+                System.out.println(System.lineSeparator() + "There is no film with id: " + filmId + ".");
             }
         }
         while (true) {
@@ -57,9 +57,10 @@ public class TicketServiceImpl implements TicketService {
                 ticket.setNumberOfSeat(numberOfSeat);
                 break;
             } else {
-                System.out.println("There is no film with number seat: " + numberOfSeat);
+                System.out.println(System.lineSeparator() + "There is no film with number seat: " + numberOfSeat + ".");
             }
         }
+        System.out.println("Ticket purchased.");
         return ticketRepository.addPersonTicketDb(person, ticket);
     }
 
@@ -68,17 +69,19 @@ public class TicketServiceImpl implements TicketService {
     public boolean returnTicket(Person person) {
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            System.out.println("Enter the id of the ticket to be return: ");
+            System.out.println(System.lineSeparator() + "Enter the id of the ticket to be return: ");
             String StringId = scanner.next();
             Integer ticketId = Integer.parseInt(StringId);
             if (searchIdTicket(ticketId)) {
                 ticket.setTicketId(ticketId);
-                break;
+                System.out.println("Ticket return.");
+                return ticketRepository.deletePersonTicketDb(person, ticket);
             } else {
-                System.out.println("There is no ticket with id: " + ticketId);
+                System.out.println(System.lineSeparator() + "There is no ticket with id: " + ticketId + ".");
+                break;
             }
         }
-        return ticketRepository.deletePersonTicketDb(person, ticket);
+        return false;
     }
 
     @Override
@@ -87,7 +90,7 @@ public class TicketServiceImpl implements TicketService {
         String idString;
         Scanner scanner = new Scanner(System.in);
         do {
-            System.out.print("Enter user ID for show user tickets: ");
+            System.out.print(System.lineSeparator() + "Enter user Id for show user tickets: ");
             idString = scanner.next();
         }
         while (!validator.numberValid(idString));
@@ -95,25 +98,29 @@ public class TicketServiceImpl implements TicketService {
         Person person = new Person();
         person.setId(id);
         if (personService.searchIdPerson(id)) {
-            showPersonTickets(person);
-            returnTicket(person);
-            return true;
+            if (showPersonTickets(person).isEmpty()) {
+                return false;
+            } else {
+                return returnTicket(person);
+            }
         } else {
+            System.out.println(System.lineSeparator() + "There is no user with Id: " + id + ".");
             return false;
         }
     }
 
 
     @Override
-    public void showPersonTickets(Person person) {
+    public List<Ticket> showPersonTickets(Person person) {
         List<Ticket> personTickets = ticketRepository.getAllTicketsDb().stream()
                 .filter(ticket1 -> ticket1.getPersonId().equals(person.getId()))
                 .collect(Collectors.toList());
         if (personTickets.isEmpty()) {
-            System.out.println("You haven't purchased tickets...");
-        }else {
+            System.out.println(System.lineSeparator() + "No tickets purchased...");
+        } else {
             System.out.println(personTickets);
         }
+        return personTickets;
     }
 
     @Override
@@ -123,7 +130,11 @@ public class TicketServiceImpl implements TicketService {
                 .filter(ticket1 -> (ticket1.getPersonId() == 0))
                 .map(f -> f.getNumberOfSeat())
                 .collect(Collectors.toList());
-        System.out.println("Free seat: " + freeSeatTickets);
+        if (freeSeatTickets.isEmpty()) {
+            System.out.println(System.lineSeparator() +"Tickets are over.");
+        } else {
+            System.out.println("Free seat: " + freeSeatTickets);
+        }
     }
 
 
