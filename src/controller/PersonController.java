@@ -44,7 +44,6 @@ public class PersonController {
         }else {
             enterInSystem();
         }
-
     }
 
     public void userMenu(Person person) {

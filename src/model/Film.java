@@ -1,17 +1,12 @@
 package model;
-
-import java.sql.Date;
-import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
 
 public class Film {
-    Integer filmId;
-    String filmName;
-    LocalDate filmDate;
-    LocalTime filmTime;
-    List <Ticket> tickets;
+   private Integer filmId;
+   private String filmName;
+   private LocalDate filmDate;
+   private LocalTime filmTime;
 
     public Film(Integer filmId, String filmName, LocalDate filmDate, LocalTime filmTime) {
         this.filmId = filmId;
@@ -68,5 +63,4 @@ public class Film {
                 "Data show: " + filmDate + " | " +
                 "Time show: " + filmTime + " | ";
     }
-
 }

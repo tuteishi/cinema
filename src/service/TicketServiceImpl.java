@@ -18,8 +18,12 @@ public class TicketServiceImpl implements TicketService {
     private static final FilmService filmService = new FilmServiceImpl();
     private static final FilmRepository filmRepository = new FilmRepositoryImpl();
     private static final PersonService personService = new PersonServiceImpl();
+    Scanner scanner = new Scanner(System.in);
     Validator validator = new Validator();
     Ticket ticket = new Ticket();
+    Integer filmId;
+    String stringId;
+    String StringNumberOfSeat;
 
 
     @Override
@@ -35,43 +39,57 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public boolean buyTicket(Person person) {
-        Scanner scanner = new Scanner(System.in);
-        Integer filmId;
-        while (true) {
-            System.out.println("Enter the id of the desired film: ");
-            String StringId = scanner.next();
-            filmId = Integer.parseInt(StringId);
-            if (searchIdFilmInTicket(filmId)) {
-                ticket.setFilmId(filmId);
-                break;
-            } else {
-                System.out.println(System.lineSeparator() + "There is no film with id: " + filmId + ".");
+        filmService.showFilms();
+        if (idForBuyTicket() != 0) {
+            if (numberOfSeatForBuyTicket() != 0) {
+                return ticketRepository.addPersonTicketDb(person, ticket);
             }
         }
-        while (true) {
+        return false;
+    }
+
+    private Integer idForBuyTicket() {
+        do {
+            System.out.println(System.lineSeparator() + "Enter the id of the desired film: ");
+            stringId = scanner.next();
+        } while (!validator.numberValid(stringId));
+        filmId = Integer.parseInt(stringId);
+        if (searchIdFilmInTicket(filmId)) {
             searchFreeSeatInTicket(filmId);
-            System.out.println("Enter seat number: ");
-            String StringNumberOfSeat = scanner.next();
-            Integer numberOfSeat = Integer.parseInt(StringNumberOfSeat);
-            if (searchNumberOfSeatInTicket(numberOfSeat)) {
-                ticket.setNumberOfSeat(numberOfSeat);
-                break;
-            } else {
-                System.out.println(System.lineSeparator() + "There is no film with number seat: " + numberOfSeat + ".");
-            }
+            ticket.setFilmId(filmId);
+            return filmId;
+        } else {
+            System.out.println(System.lineSeparator() + "There is no film with id: " + filmId + ".");
+            return 0;
         }
-        System.out.println("Ticket purchased.");
-        return ticketRepository.addPersonTicketDb(person, ticket);
+    }
+
+    private Integer numberOfSeatForBuyTicket() {
+        do {
+            System.out.println(System.lineSeparator() + "Enter seat number: ");
+            StringNumberOfSeat = scanner.next();
+        } while (!validator.numberValid(StringNumberOfSeat));
+        Integer numberOfSeat = Integer.parseInt(StringNumberOfSeat);
+        if (searchNumberOfSeatInTicket(numberOfSeat)) {
+            ticket.setNumberOfSeat(numberOfSeat);
+            System.out.println("Ticket purchased.");
+            return numberOfSeat;
+        } else {
+            System.out.println(System.lineSeparator() + "There is no film with number seat: " + numberOfSeat + ".");
+            return 0;
+        }
     }
 
 
     @Override
     public boolean returnTicket(Person person) {
         Scanner scanner = new Scanner(System.in);
-        while (true) {
-            System.out.println(System.lineSeparator() + "Enter the id of the ticket to be return: ");
-            String StringId = scanner.next();
-            Integer ticketId = Integer.parseInt(StringId);
+        while (!showPersonTickets(person).isEmpty()) {
+            do {
+                System.out.println(System.lineSeparator() + "Enter the id of the ticket to be return: ");
+              stringId = scanner.next();
+            }while (!validator.numberValid(stringId));
+            Integer ticketId = Integer.parseInt(stringId);
             if (searchIdTicket(ticketId)) {
                 ticket.setTicketId(ticketId);
                 System.out.println("Ticket return.");
@@ -131,7 +149,7 @@ public class TicketServiceImpl implements TicketService {
                 .map(f -> f.getNumberOfSeat())
                 .collect(Collectors.toList());
         if (freeSeatTickets.isEmpty()) {
-            System.out.println(System.lineSeparator() +"Tickets are over.");
+            System.out.println(System.lineSeparator() + "Tickets are over.");
         } else {
             System.out.println("Free seat: " + freeSeatTickets);
         }
