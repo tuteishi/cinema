@@ -1,8 +1,6 @@
 package controller;
 
 import model.Person;
-import repository.PersonRepository;
-import repository.PersonRepositoryImpl;
 import service.*;
 
 import java.util.Optional;
@@ -16,12 +14,12 @@ public class PersonController {
 
     public void enterInSystem() {
         while (true) {
-            System.out.println(System.lineSeparator() + """
+            System.out.print(System.lineSeparator() + """
                     Enter:
                     1 - Register in application.
                     2 - Log into application.
                     3 - Exit.
-                                     """);
+                    >>>\t""");
             Scanner scanner = new Scanner(System.in);
             String choice = scanner.next();
             switch (choice) {
@@ -48,13 +46,13 @@ public class PersonController {
 
     public void userMenu(Person person) {
         while (true) {
-            System.out.println(System.lineSeparator() + """
+            System.out.print(System.lineSeparator() + """
                     Enter:
                     1 - Show movie poster.
                     2 - Buy or return a ticket.
                     3 - View purchased tickets.
                     4 - Exit.
-                    """);
+                    >>>\t""");
             Scanner scanner = new Scanner(System.in);
             String choice = scanner.next();
             switch (choice) {
@@ -69,12 +67,12 @@ public class PersonController {
 
     public void buyReturnTicket(Person person) {
         while (true) {
-            System.out.println(System.lineSeparator() + """
+            System.out.print(System.lineSeparator() + """
                     Enter:
                     1 - Buy ticket.
                     2 - Return ticket.
                     3 - Back to menu.
-                    """);
+                    >>>\t""");
             Scanner scanner = new Scanner(System.in);
             String choice = scanner.next();
             switch (choice) {
@@ -88,13 +86,13 @@ public class PersonController {
 
     public void managerMenu() {
         while (true) {
-            System.out.println(System.lineSeparator() + """
+            System.out.print(System.lineSeparator() + """
                     Enter:
                     1 - Show movie poster.
                     2 - Edit film.
                     3 - Return user ticket.
                     4 - Exit.
-                    """);
+                    >>>\t""");
             Scanner scanner = new Scanner(System.in);
             String choice = scanner.next();
             switch (choice) {
@@ -109,12 +107,12 @@ public class PersonController {
 
     public void adminMenu() {
         while (true) {
-            System.out.println(System.lineSeparator() + """
+            System.out.print(System.lineSeparator() + """
                     Enter:
                     1 - Delete or edit a user.
                     2 - Add, delete or edit film.
                     3 - Exit.
-                    """);
+                    >>>\t""");
             Scanner scanner = new Scanner(System.in);
             String choice = scanner.next();
             switch (choice) {
@@ -128,12 +126,12 @@ public class PersonController {
 
     public void deleteEditUser() {
         while (true) {
-            System.out.println(System.lineSeparator() + """
+            System.out.print(System.lineSeparator() + """
                     Enter:
                     1 - Delete user.
                     2 - Edit role user.
                     3 - Back to menu.
-                    """);
+                    >>>\t""");
             Scanner scanner = new Scanner(System.in);
             String choice = scanner.next();
             switch (choice) {
@@ -147,13 +145,13 @@ public class PersonController {
 
     public void deleteEditFilm() {
         while (true) {
-            System.out.println(System.lineSeparator() + """
+            System.out.print(System.lineSeparator() + """
                     Enter:
                     1 - Add film.
                     2 - Delete film.
                     3 - Edit film.
                     4 - Back to menu.
-                    """);
+                    >>>\t""");
             Scanner scanner = new Scanner(System.in);
             String choice = scanner.next();
             switch (choice) {

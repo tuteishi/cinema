@@ -3,7 +3,6 @@ package repository;
 import model.Film;
 import model.Person;
 import model.Ticket;
-
 import java.util.List;
 
 public interface TicketRepository {

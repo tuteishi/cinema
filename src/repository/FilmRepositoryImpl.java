@@ -1,22 +1,21 @@
 package repository;
 
-import com.mysql.jdbc.MysqlDataTruncation;
 import model.Film;
-import model.Person;
-import model.Ticket;
 import util.ConnectionManager;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
+
 
 public class FilmRepositoryImpl implements FilmRepository {
+
     @Override
     public boolean addFilmToDb(Film film) {
         try (Connection connection = ConnectionManager.open()) {
             PreparedStatement statement =
                     connection.prepareStatement("INSERT INTO film (film_name,film_date,film_time) VALUES(?,?,?)");
+
             statement.setString(1, film.getFilmName());
 
             Date filmDate = Date.valueOf(film.getFilmDate());
@@ -38,7 +37,7 @@ public class FilmRepositoryImpl implements FilmRepository {
         try (Connection connection = ConnectionManager.open()) {
             PreparedStatement statement =
                     connection.prepareStatement("DELETE FROM film WHERE id=?");
-            statement.setInt(1,id);
+            statement.setInt(1, id);
             statement.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -52,9 +51,7 @@ public class FilmRepositoryImpl implements FilmRepository {
             PreparedStatement statement =
                     connection.prepareStatement("UPDATE film SET film_name=? WHERE id=?");
             statement.setString(1, film.getFilmName());
-
             statement.setInt(2, film.getFilmId());
-
             statement.execute();
             return true;
         } catch (SQLException e) {
@@ -68,11 +65,8 @@ public class FilmRepositoryImpl implements FilmRepository {
         try (Connection connection = ConnectionManager.open()) {
             PreparedStatement statement =
                     connection.prepareStatement("UPDATE film SET film_date=? WHERE id=?");
-
             statement.setDate(1, Date.valueOf(film.getFilmDate()));
-
             statement.setInt(2, film.getFilmId());
-
             statement.execute();
             return true;
         } catch (SQLException e) {
@@ -86,11 +80,8 @@ public class FilmRepositoryImpl implements FilmRepository {
         try (Connection connection = ConnectionManager.open()) {
             PreparedStatement statement =
                     connection.prepareStatement("UPDATE film SET film_time=? WHERE id=?");
-
             statement.setTime(1, Time.valueOf(film.getFilmTime()));
-
             statement.setInt(2, film.getFilmId());
-
             statement.execute();
             return true;
         } catch (SQLException e) {
@@ -101,7 +92,7 @@ public class FilmRepositoryImpl implements FilmRepository {
 
     @Override
     public Integer getFilmIdFromDb(Film film) {
-        try (Connection connection = ConnectionManager.open()){
+        try (Connection connection = ConnectionManager.open()) {
             PreparedStatement statement = connection.prepareStatement(
                     "SELECT id FROM film WHERE film_name=? AND film_date=? AND film_time=?");
             statement.setString(1, film.getFilmName());
@@ -120,19 +111,17 @@ public class FilmRepositoryImpl implements FilmRepository {
     }
 
 
-
     @Override
     public List<Film> getAllFilmsDb() {
         List<Film> films = new ArrayList<>();
-        try (Connection connection = ConnectionManager.open()){
+        try (Connection connection = ConnectionManager.open()) {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM film");
             ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 Integer filmId = resultSet.getInt("id");
                 String filmName = resultSet.getString("film_name");
                 Date filmDate = resultSet.getDate("film_date");
                 Time filmTime = resultSet.getTime("film_time");
-
                 Film film = new Film(filmId, filmName, filmDate.toLocalDate(), filmTime.toLocalTime());
                 films.add(film);
             }
@@ -141,6 +130,4 @@ public class FilmRepositoryImpl implements FilmRepository {
         }
         return films;
     }
-
-
 }

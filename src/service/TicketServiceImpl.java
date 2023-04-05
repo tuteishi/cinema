@@ -25,7 +25,6 @@ public class TicketServiceImpl implements TicketService {
     String stringId;
     String StringNumberOfSeat;
 
-
     @Override
     public boolean addTicketsDB(Film film) {
         int count = 1;
@@ -86,20 +85,26 @@ public class TicketServiceImpl implements TicketService {
         Scanner scanner = new Scanner(System.in);
         while (!showPersonTickets(person).isEmpty()) {
             do {
-                System.out.println(System.lineSeparator() + "Enter the id of the ticket to be return: ");
-              stringId = scanner.next();
-            }while (!validator.numberValid(stringId));
+                System.out.print(System.lineSeparator() + "Enter the id of the ticket to be return: ");
+                stringId = scanner.next();
+            } while (!validator.numberValid(stringId));
             Integer ticketId = Integer.parseInt(stringId);
-            if (searchIdTicket(ticketId)) {
-                ticket.setTicketId(ticketId);
-                System.out.println("Ticket return.");
-                return ticketRepository.deletePersonTicketDb(person, ticket);
+            if (searchIdTicketInPersonTicket(person, ticketId)) {
+                    ticket.setTicketId(ticketId);
+                    System.out.println(System.lineSeparator() + "Ticket return.");
+                    return ticketRepository.deletePersonTicketDb(person, ticket);
             } else {
                 System.out.println(System.lineSeparator() + "There is no ticket with id: " + ticketId + ".");
                 break;
             }
         }
         return false;
+    }
+
+    private boolean searchIdTicketInPersonTicket(Person person, Integer ticketId) {
+        boolean match = searchPersonTicket(person).stream()
+                .anyMatch(f -> f.getTicketId().equals(ticketId));
+        return match;
     }
 
     @Override
@@ -116,7 +121,7 @@ public class TicketServiceImpl implements TicketService {
         Person person = new Person();
         person.setId(id);
         if (personService.searchIdPerson(id)) {
-            if (showPersonTickets(person).isEmpty()) {
+            if (searchPersonTicket(person).isEmpty()) {
                 return false;
             } else {
                 return returnTicket(person);
@@ -127,7 +132,6 @@ public class TicketServiceImpl implements TicketService {
         }
     }
 
-
     @Override
     public List<Ticket> showPersonTickets(Person person) {
         List<Ticket> personTickets = ticketRepository.getAllTicketsDb().stream()
@@ -136,7 +140,9 @@ public class TicketServiceImpl implements TicketService {
         if (personTickets.isEmpty()) {
             System.out.println(System.lineSeparator() + "No tickets purchased...");
         } else {
-            System.out.println(personTickets);
+            System.out.println(System.lineSeparator());
+            personTickets.stream()
+                    .forEach(System.out::println);
         }
         return personTickets;
     }
@@ -155,12 +161,10 @@ public class TicketServiceImpl implements TicketService {
         }
     }
 
-
     public boolean searchIdFilmInTicket(Integer filmId) {
         boolean match = ticketRepository.getAllTicketsDb().stream()
                 .anyMatch(f -> f.getFilmId().equals(filmId));
         return match;
-
     }
 
     public boolean searchNumberOfSeatInTicket(Integer numberOfSeat) {
@@ -169,11 +173,14 @@ public class TicketServiceImpl implements TicketService {
         return match;
     }
 
-    public boolean searchIdTicket(Integer ticketId) {
-        boolean match = ticketRepository.getAllTicketsDb().stream()
-                .anyMatch(f -> f.getTicketId().equals(ticketId));
-        return match;
-
+    public List<Ticket> searchPersonTicket(Person person) {
+        List<Ticket> personTickets = ticketRepository.getAllTicketsDb().stream()
+                .filter(ticket1 -> ticket1.getPersonId().equals(person.getId()))
+                .collect(Collectors.toList());
+        if (personTickets.isEmpty()) {
+            System.out.println(System.lineSeparator() + "No tickets purchased...");
+        }
+            return personTickets;
     }
 
 }

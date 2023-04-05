@@ -2,8 +2,6 @@ package service;
 
 import model.Person;
 
-import java.util.List;
-
 /**
  * Сервис для работы с пользователем
  */
@@ -38,5 +36,8 @@ public interface PersonService {
      * */
     boolean deleteById();
 
+    /**
+     * Поиск пользователя по Id
+     */
     public boolean searchIdPerson(Integer id);
 }

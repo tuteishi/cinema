@@ -7,11 +7,9 @@ import repository.TicketRepository;
 import repository.TicketRepositoryImpl;
 import util.Validator;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.Comparator;
 import java.util.Scanner;
 import java.util.stream.Stream;
@@ -28,6 +26,7 @@ public class FilmServiceImpl implements FilmService {
     String error = "Invalid data entered, please try again.";
 
     public Film addFilm() {
+        Scanner scanner = new Scanner(System.in);
         System.out.print("Enter film name: ");
         String filmName = scanner.nextLine();
         Film film = new Film(filmName, addDate(), addTime());
@@ -67,7 +66,7 @@ public class FilmServiceImpl implements FilmService {
     public boolean deleteFilm() {
         showFilms();
         do {
-            System.out.print("Enter Id film for delete: ");
+            System.out.print(System.lineSeparator() + "Enter Id film for delete: ");
             idString = scanner.next();
         }
         while (!validator.numberValid(idString));
@@ -94,12 +93,12 @@ public class FilmServiceImpl implements FilmService {
         Integer id = Integer.parseInt(idString);
         film.setFilmId(id);
         if (searchIdFilm(id)) {
-            System.out.println(System.lineSeparator() + """
+            System.out.print(System.lineSeparator() + """
                     Enter:
                     1 - Edit film name.
                     2 - Edit film date.
                     3 - Edit fim time.
-                    """);
+                    >>>\t""");
             String choice = scanner.next();
             switch (choice) {
                 case "1" -> editFilmName(film);
@@ -109,7 +108,7 @@ public class FilmServiceImpl implements FilmService {
             }
             return true;
         } else {
-            System.out.println(System.lineSeparator() + "There is no film with id " + id + ".");
+            System.out.println(System.lineSeparator() + "There is no film with id: " + id + ".");
             return false;
         }
     }
@@ -167,4 +166,5 @@ public class FilmServiceImpl implements FilmService {
                     .forEach(System.out::println);
         }
     }
+
 }

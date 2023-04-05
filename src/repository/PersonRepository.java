@@ -6,10 +6,10 @@ import java.util.List;
 
 public interface PersonRepository {
     boolean addPersonToDb(Person person);
-    public List <Person> getAllPersonsFromDb();
-    public Person getPersonByUsernameFromDb(String username);
-    public boolean deletePersonByIdFromDb(int id);
-    public boolean editRoleManager(Integer id);
-    public boolean editRoleAdmin(Integer id);
-    public boolean editRoleUser(Integer id);
+     List <Person> getAllPersonsFromDb();
+     Person getPersonByUsernameFromDb(String username);
+     boolean deletePersonByIdFromDb(int id);
+     boolean editRoleManager(Integer id);
+     boolean editRoleAdmin(Integer id);
+     boolean editRoleUser(Integer id);
 }

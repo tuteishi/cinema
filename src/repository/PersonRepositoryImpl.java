@@ -3,7 +3,6 @@ package repository;
 import model.Person;
 import model.Role;
 import util.ConnectionManager;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,10 +10,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PersonRepositoryImpl implements PersonRepository{
+public class PersonRepositoryImpl implements PersonRepository {
     @Override
-    public boolean addPersonToDb(Person person){
-        try (Connection connection = ConnectionManager.open()){
+    public boolean addPersonToDb(Person person) {
+        try (Connection connection = ConnectionManager.open()) {
             PreparedStatement statement =
                     connection.prepareStatement("INSERT INTO person (username, password, role) VALUES(?,?,?)");
             statement.setString(1, person.getUsername());
@@ -24,17 +23,17 @@ public class PersonRepositoryImpl implements PersonRepository{
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
-            return  false;
+            return false;
         }
     }
 
     @Override
     public List<Person> getAllPersonsFromDb() {
-        List <Person> persons = new ArrayList<>();
-        try (Connection connection = ConnectionManager.open()){
+        List<Person> persons = new ArrayList<>();
+        try (Connection connection = ConnectionManager.open()) {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM person");
             ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String username = resultSet.getString("username");
                 String password = resultSet.getString("password");
@@ -51,11 +50,11 @@ public class PersonRepositoryImpl implements PersonRepository{
 
     @Override
     public Person getPersonByUsernameFromDb(String username) {
-        try (Connection connection = ConnectionManager.open()){
+        try (Connection connection = ConnectionManager.open()) {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM person WHERE username=?");
             statement.setString(1, username);
             ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 int id = resultSet.getInt("id");
                 String password = resultSet.getString("password");
                 Role role = Role.valueOf(resultSet.getString("role"));
@@ -70,7 +69,7 @@ public class PersonRepositoryImpl implements PersonRepository{
 
     @Override
     public boolean deletePersonByIdFromDb(int id) {
-        try (Connection connection = ConnectionManager.open()){
+        try (Connection connection = ConnectionManager.open()) {
             PreparedStatement statement = connection.prepareStatement("DELETE FROM person WHERE id=?");
             statement.setInt(1, id);
             statement.execute();
@@ -83,7 +82,7 @@ public class PersonRepositoryImpl implements PersonRepository{
 
     @Override
     public boolean editRoleManager(Integer id) {
-        try (Connection connection = ConnectionManager.open()){
+        try (Connection connection = ConnectionManager.open()) {
             PreparedStatement statement = connection.prepareStatement("UPDATE person SET role=? WHERE id=?");
             statement.setString(1, Role.MANAGER.name());
             statement.setInt(2, id);
@@ -97,7 +96,7 @@ public class PersonRepositoryImpl implements PersonRepository{
 
     @Override
     public boolean editRoleAdmin(Integer id) {
-        try (Connection connection = ConnectionManager.open()){
+        try (Connection connection = ConnectionManager.open()) {
             PreparedStatement statement = connection.prepareStatement("UPDATE person SET role=? WHERE id=?");
             statement.setString(1, Role.ADMIN.name());
             statement.setInt(2, id);
@@ -111,7 +110,7 @@ public class PersonRepositoryImpl implements PersonRepository{
 
     @Override
     public boolean editRoleUser(Integer id) {
-        try (Connection connection = ConnectionManager.open()){
+        try (Connection connection = ConnectionManager.open()) {
             PreparedStatement statement = connection.prepareStatement("UPDATE person SET role=? WHERE id=?");
             statement.setString(1, Role.USER.name());
             statement.setInt(2, id);
@@ -122,6 +121,5 @@ public class PersonRepositoryImpl implements PersonRepository{
         }
         return false;
     }
-
 
 }

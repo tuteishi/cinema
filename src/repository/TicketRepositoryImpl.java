@@ -9,9 +9,9 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TicketRepositoryImpl implements TicketRepository{
+public class TicketRepositoryImpl implements TicketRepository {
     @Override
-    public boolean addTicketsDb(Film film,  Integer numberOfSeat) {
+    public boolean addTicketsDb(Film film, Integer numberOfSeat) {
         try (Connection connection = ConnectionManager.open()) {
             PreparedStatement statement =
                     connection.prepareStatement(
@@ -36,7 +36,7 @@ public class TicketRepositoryImpl implements TicketRepository{
         try (Connection connection = ConnectionManager.open()) {
             PreparedStatement statement =
                     connection.prepareStatement("DELETE FROM ticket WHERE film_id=?");
-            statement.setInt(1,id);
+            statement.setInt(1, id);
             statement.execute();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -50,9 +50,7 @@ public class TicketRepositoryImpl implements TicketRepository{
             PreparedStatement statement =
                     connection.prepareStatement("UPDATE ticket SET film_name=? WHERE film_id=?");
             statement.setString(1, film.getFilmName());
-
             statement.setInt(2, film.getFilmId());
-
             statement.execute();
             return true;
         } catch (SQLException e) {
@@ -60,7 +58,6 @@ public class TicketRepositoryImpl implements TicketRepository{
             return false;
         }
     }
-
 
     @Override
     public boolean addPersonTicketDb(Person person, Ticket ticket) {
@@ -100,17 +97,16 @@ public class TicketRepositoryImpl implements TicketRepository{
     @Override
     public List<Ticket> getAllTicketsDb() {
         List<Ticket> tickets = new ArrayList<>();
-        try (Connection connection = ConnectionManager.open()){
+        try (Connection connection = ConnectionManager.open()) {
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM ticket");
             ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 Integer ticketId = resultSet.getInt("id");
                 Integer personId = resultSet.getInt("person_id");
                 Integer filmId = resultSet.getInt("film_id");
                 String filmName = resultSet.getString("film_name");
                 Integer numberOfSeat = resultSet.getInt("number_seat");
                 Integer coast = resultSet.getInt("coast");
-
                 Ticket ticket = new Ticket(ticketId, personId, filmId, filmName, numberOfSeat, coast);
                 tickets.add(ticket);
             }

@@ -1,13 +1,13 @@
 package model;
 
 public class Ticket {
-    Integer ticketId;
-    Integer personId;
-    Integer filmId;
-    String filmName;
-    Integer numberOfSeat;
-    Integer coast;
-    boolean sail;
+   private Integer ticketId;
+   private Integer personId;
+   private Integer filmId;
+   private String filmName;
+   private Integer numberOfSeat;
+   private Integer coast;
+   private boolean sail;
 
     public Ticket(Integer ticketId, Integer personId, Integer filmId, String fimName,
                   Integer numberOfSeat, Integer coast, boolean sail) {
